@@ -24,8 +24,8 @@ routes.get('/parkings', ParkingController.index)
 routes.post('/parkings', ParkingController.create)
 
 // Regions
-routes.get('/parkings/:id', RegionController.index)
-routes.post('/parkings/:id', RegionController.create)
+routes.get('/parkings/:parkingId', RegionController.index)
+routes.post('/parkings/:parkingId', RegionController.create)
 
 // Spots
 routes.get('/parkings/:parkingId/:regionId', SpotController.index)

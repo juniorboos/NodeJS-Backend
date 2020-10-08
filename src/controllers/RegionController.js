@@ -4,10 +4,10 @@ const parkingsRef = admin.firestore().collection('Parkings');
 module.exports = {
    
    async index(request, response) {
-      const { id } = request.params;
+      const { parkingId } = request.params;
 
       console.log('Procurando regiões...')
-      const snapshot = await parkingsRef.doc(id).collection('Regions').get();
+      const snapshot = await parkingsRef.doc(parkingId).collection('Regions').get();
       if(snapshot.empty) {
          return response.json({error:'Empty collection'});
       }
@@ -26,10 +26,10 @@ module.exports = {
    },
 
    async create(request, response) {
-      const { id } = request.params;
+      const { parkingId } = request.params;
       const { name } = request.body;
 
-      await parkingsRef.doc(id).collection('Regions').doc(name).set({
+      await parkingsRef.doc(parkingId).collection('Regions').doc(name).set({
          name
       })
       return response.json({ message: "Success" });
