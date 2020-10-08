@@ -33,5 +33,12 @@ module.exports = {
          coordinates
       })
       return response.json({ message: "Success" });
+   },
+
+   async delete(request, response) {
+      const { parkingId, regionId, spotId } = request.params;
+
+      await parkingsRef.doc(parkingId).collection('Regions').doc(regionId).collection('Spots').doc(spotId).delete()
+      return response.json({ message: "Success" });
    }
 }

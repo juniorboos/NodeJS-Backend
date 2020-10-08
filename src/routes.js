@@ -32,5 +32,6 @@ routes.delete('/parkings/:parkingId/:regionId', RegionController.delete)
 // Spots
 routes.get('/parkings/:parkingId/:regionId', SpotController.index)
 routes.post('/parkings/:parkingId/:regionId', SpotController.create)
+routes.delete('/parkings/:parkingId/:regionId/:spotId', SpotController.delete)
 
 module.exports = routes;
