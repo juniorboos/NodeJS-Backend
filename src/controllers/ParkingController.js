@@ -7,9 +7,7 @@ module.exports = {
       console.log('Procurando parkings...')
       const snapshot = await parkingsRef.get();
       if(snapshot.empty) {
-         response = {error:'Empty collection'};
-         console.log(response);
-         return response;
+         return response.json({error:'Empty collection'});
       }
 
       const parkingsList = []

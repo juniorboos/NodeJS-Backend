@@ -2,6 +2,7 @@ const express = require('express');
 
 const ParkingController = require('./controllers/ParkingController');
 const RegionController = require('./controllers/RegionController');
+const SpotController = require('./controllers/SpotController');
 // const DeviceController = require('./controllers/DeviceController');
 
 const routes = express.Router();
@@ -17,11 +18,17 @@ const routes = express.Router();
 // routes.post('/incidents', IncidentController.create);
 // routes.delete('/incidents/:id', IncidentController.delete);
 
-routes.get('/regions/:id', RegionController.index)
-routes.post('/regions/:id', RegionController.create)
 
+// Parkings
 routes.get('/parkings', ParkingController.index)
 routes.post('/parkings', ParkingController.create)
 
+// Regions
+routes.get('/parkings/:id', RegionController.index)
+routes.post('/parkings/:id', RegionController.create)
+
+// Spots
+routes.get('/parkings/:parkingId/:regionId', SpotController.index)
+routes.post('/parkings/:parkingId/:regionId', SpotController.create)
 
 module.exports = routes;
