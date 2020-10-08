@@ -1,5 +1,6 @@
 const admin = require('../services/firebase')
 const parkingsRef = admin.firestore().collection('Parkings');
+
 module.exports = {
    
    async index(request, response) {
