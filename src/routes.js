@@ -22,6 +22,7 @@ const routes = express.Router();
 // Parkings
 routes.get('/parkings', ParkingController.index)
 routes.post('/parkings', ParkingController.create)
+routes.delete('/parkings/:parkingId', ParkingController.delete)
 
 // Regions
 routes.get('/parkings/:parkingId', RegionController.index)

@@ -32,5 +32,12 @@ module.exports = {
          image
       })
       return response.json({ message: "Success" });
+   },
+
+   async delete(request, response) {
+      const { parkingId } = request.params;
+
+      await parkingsRef.doc(parkingId).delete()
+      return response.json({ message: "Success" });
    }
 }
