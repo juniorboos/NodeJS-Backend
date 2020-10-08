@@ -33,5 +33,12 @@ module.exports = {
          name
       })
       return response.json({ message: "Success" });
+   },
+
+   async delete(request, response) {
+      const { parkingId, regionId } = request.params;
+
+      await parkingsRef.doc(parkingId).collection('Regions').doc(regionId).delete()
+      return response.json({ message: "Success" });
    }
 }
