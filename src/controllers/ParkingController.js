@@ -17,10 +17,7 @@ module.exports = {
 
       console.log("Parkings: ", parkingsList)
       
-      const parkings = {
-         data: parkingsList
-      }
-      return response.json(parkings);
+      return response.json(parkingsList);
    },
 
    async create(request, response) {

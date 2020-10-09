@@ -19,10 +19,7 @@ module.exports = {
 
       console.log("Spots: ", spotsList)
       
-      const spots = {
-         data: spotsList
-      }
-      return response.json(spots);
+      return response.json(spotsList);
    },
 
    async create(request, response) {

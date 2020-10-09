@@ -19,10 +19,7 @@ module.exports = {
 
       console.log("Regions: ", regionsList)
       
-      const regions = {
-         data: regionsList
-      }
-      return response.json(regions);
+      return response.json(regionsList);
    },
 
    async create(request, response) {
