@@ -6,9 +6,7 @@ module.exports = {
    async index(request, response) {
       console.log('Procurando parkings...')
       const snapshot = await parkingsRef.get();
-      if(snapshot.empty) {
-         return response.json({error:'Empty collection'});
-      }
+      
 
       const parkingsList = []
       snapshot.forEach(doc => {

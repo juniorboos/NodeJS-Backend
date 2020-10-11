@@ -8,9 +8,7 @@ module.exports = {
 
       console.log('Procurando regiões...')
       const snapshot = await parkingsRef.doc(parkingId).collection('Regions').get();
-      if(snapshot.empty) {
-         return response.json({error:'Empty collection'});
-      }
+      
 
       const regionsList = []
       snapshot.forEach(doc => {
