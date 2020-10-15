@@ -19,11 +19,25 @@ module.exports = {
    },
 
    async create(request, response) {
-      const { id, name, coordinates, image } = request.body;
+      const { 
+         id, 
+         name,
+         maxDuration,
+         vehiclesAllowed,
+         totalSpots,
+         coordinates,
+         address,
+         description,
+         image } = request.body;
 
       await parkingsRef.doc(id).set({
          name,
+         maxDuration,
+         vehiclesAllowed,
+         totalSpots,
          coordinates,
+         address,
+         description,
          image
       })
       return response.json({ message: "Success" });
