@@ -20,6 +20,30 @@ module.exports = {
 
    async create(request, response) {
       const { 
+         name,
+         maxDuration,
+         vehiclesAllowed,
+         totalSpots,
+         coordinates,
+         address,
+         description,
+         image } = request.body;
+
+      await parkingsRef.add({
+         name,
+         maxDuration,
+         vehiclesAllowed,
+         totalSpots,
+         coordinates,
+         address,
+         description,
+         image
+      })
+      return response.json({ message: "Success" });
+   },
+
+   async update(request, response) {
+      const {
          id, 
          name,
          maxDuration,
