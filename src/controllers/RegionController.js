@@ -22,10 +22,31 @@ module.exports = {
 
    async create(request, response) {
       const { parkingId } = request.params;
-      const { name } = request.body;
+      const { 
+         name, 
+         coordinates,
+         description } = request.body;
 
-      await parkingsRef.doc(parkingId).collection('Regions').doc(name).set({
-         name
+      await parkingsRef.doc(parkingId).collection('Regions').add({
+         name,
+         coordinates,
+         description
+      })
+      return response.json({ message: "Success" });
+   },
+
+   async update(request, response) {
+      const { parkingId } = request.params;
+      const { 
+         id,
+         name, 
+         coordinates,
+         description } = request.body;
+
+      await parkingsRef.doc(parkingId).collection('Regions').doc(id).set({
+         name,
+         coordinates,
+         description
       })
       return response.json({ message: "Success" });
    },
