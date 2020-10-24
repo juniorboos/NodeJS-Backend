@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const ParkingController = require('./controllers/ParkingController');
 const RegionController = require('./controllers/RegionController');
 const SpotController = require('./controllers/SpotController');
-
+const cookieParser  = require("cookie-parser")
 const authMiddleware = require('./middleware/auth')
 
 const routes = express.Router();
@@ -24,10 +24,16 @@ routes.post("/authenticate", async (req, res) => {
          return res.status(400).json({ error: "Invalid password" });
       }
 
-      return res.json({
+      const token = jwt.sign({ id: this.id }, "secret", { expiresIn: 86400 })
+
+      res.cookie('token', token, { httpOnly : true})
+
+      res.json({
          user,
-         token: jwt.sign({ id: this.id }, "secret", { expiresIn: 86400 })
-      });
+         token
+      })
+
+      return res
    } catch (err) {
       console.log(err)
       return res.status(400).json({ error: "User authentication failed" });
