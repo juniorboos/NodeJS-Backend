@@ -1,23 +1,40 @@
 const express = require('express');
-
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 const ParkingController = require('./controllers/ParkingController');
 const RegionController = require('./controllers/RegionController');
 const SpotController = require('./controllers/SpotController');
-// const DeviceController = require('./controllers/DeviceController');
+
+const authMiddleware = require('./middleware/auth')
 
 const routes = express.Router();
+const admins = require('./services/Admins.json')
 
-// routes.post('/sessions', SessionController.create);
+routes.post("/authenticate", async (req, res) => {
+   try {
+      const { email, password } = req.body;
 
-// routes.get('/ongs', OngController.index);
-// routes.post('/ongs', OngController.create);
+      const userEmail = email
+      const user = admins.find( ({ email }) => email === userEmail)
+      console.log(user)
+      if (!user) {
+         return res.status(400).json({ error: "User not found" });
+      }
+      if (!(await bcrypt.compare(password, user.password))) {
+         return res.status(400).json({ error: "Invalid password" });
+      }
 
-// routes.get('/profile', ProfileController.index);
+      return res.json({
+         user,
+         token: jwt.sign({ id: this.id }, "secret", { expiresIn: 86400 })
+      });
+   } catch (err) {
+      console.log(err)
+      return res.status(400).json({ error: "User authentication failed" });
+   }
+});
 
-// routes.get('/incidents', IncidentController.index);
-// routes.post('/incidents', IncidentController.create);
-// routes.delete('/incidents/:id', IncidentController.delete);
-
+routes.use(authMiddleware)
 
 // Parkings
 routes.get('/parkings', ParkingController.index)
