@@ -25,7 +25,7 @@ routes.post("/authenticate", async (req, res) => {
          return res.status(400).json({ error: "Invalid password" });
       }
 
-      const token = jwt.sign({ id: user.id }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15m' })
+      const token = jwt.sign({ id: user.id }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '36h' })
       res.cookie('token', token, { httpOnly: true })
       res.json({
          user,
@@ -49,7 +49,7 @@ routes.post("/refresh_token", async (req, res) => {
    try {
       payload = verify(token, process.env.REFRESH_TOKEN_SECRET)
    } catch (err) {
-      console.log(err)
+      console.log(err.name)
       return res.send({ ok: false, accessToken: "" })
    }
 
@@ -65,7 +65,7 @@ routes.post("/refresh_token", async (req, res) => {
       { id: user.id },
       process.env.REFRESH_TOKEN_SECRET,
       {
-         expiresIn: "24h"
+         expiresIn: "36h"
       }
    );
 
@@ -77,10 +77,10 @@ routes.post("/refresh_token", async (req, res) => {
    const newToken = jwt.sign(
       { id: user.id },
       process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: '10s' }
+      { expiresIn: '36h' }
    )
 
-   return res.send({ ok: true, accessToken: newToken})
+   return res.send({ ok: true, user: user, accessToken: newToken})
 
 })
 
