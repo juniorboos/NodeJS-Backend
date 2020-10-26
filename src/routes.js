@@ -99,6 +99,19 @@ routes.post("/refresh_token", async (req, res) => {
 
 routes.use(authMiddleware)
 
+routes.post("/logout", async (req, res) => {
+   const removedToken = ""
+
+   res.cookie("token", removedToken, {
+      httpOnly: true,
+      path: "/refresh_token"
+   });
+   
+   return res.send({ ok: true })
+
+})
+
+
 // Parkings
 routes.get('/parkings', ParkingController.index)
 routes.post('/parkings', ParkingController.create)
