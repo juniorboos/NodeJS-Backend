@@ -25,8 +25,21 @@ routes.post("/authenticate", async (req, res) => {
          return res.status(400).json({ error: "Invalid password" });
       }
 
-      const token = jwt.sign({ id: user.id }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '36h' })
-      res.cookie('token', token, { httpOnly: true })
+      const token = jwt.sign({ id: user.id }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '6h' })
+
+      const refreshedToken = jwt.sign(
+         { id: user.id },
+         process.env.REFRESH_TOKEN_SECRET,
+         {
+            expiresIn: "24h"
+         }
+      );
+
+      res.cookie("token", refreshedToken, {
+         httpOnly: true,
+         path: "/refresh_token"
+      });
+
       res.json({
          user,
          token
@@ -65,7 +78,7 @@ routes.post("/refresh_token", async (req, res) => {
       { id: user.id },
       process.env.REFRESH_TOKEN_SECRET,
       {
-         expiresIn: "36h"
+         expiresIn: "24h"
       }
    );
 
@@ -77,7 +90,7 @@ routes.post("/refresh_token", async (req, res) => {
    const newToken = jwt.sign(
       { id: user.id },
       process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: '36h' }
+      { expiresIn: '6h' }
    )
 
    return res.send({ ok: true, user: user, accessToken: newToken})
